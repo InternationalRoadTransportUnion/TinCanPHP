@@ -28,7 +28,7 @@ use TinCan\Verb;
 use TinCan\Version;
 use Namshi\JOSE\JWS;
 
-class StatementTest extends \PHPUnit_Framework_TestCase {
+class StatementTest extends \PHPUnit\Framework\TestCase {
     use TestCompareWithSignatureTrait;
 
     public function testInstantiation() {
@@ -47,17 +47,17 @@ class StatementTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testFromJSONInvalidNull() {
-        $this->setExpectedException('TinCan\JSONParseErrorException');
+        $this->expectException('TinCan\JSONParseErrorException');
         $obj = Statement::fromJSON(null);
     }
 
     public function testFromJSONInvalidEmptyString() {
-        $this->setExpectedException('TinCan\JSONParseErrorException');
+        $this->expectException('TinCan\JSONParseErrorException');
         $obj = Statement::fromJSON('');
     }
 
     public function testFromJSONInvalidMalformed() {
-        $this->setExpectedException('TinCan\JSONParseErrorException');
+        $this->expectException('TinCan\JSONParseErrorException');
         $obj = Statement::fromJSON('{id:"some value"}');
     }
 
@@ -89,20 +89,20 @@ class StatementTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testSetId() {
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'arg1 must be a UUID "some invalid id"'
+        $this->expectException(
+            'InvalidArgumentException'
         );
+        $this->expectExceptionMessage('arg1 must be a UUID "some invalid id"');
 
         $obj = new Statement();
         $obj->setId('some invalid id');
     }
 
     public function testSetStoredInvalidArgumentException() {
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'type of arg1 must be string or DateTime'
+        $this->expectException(
+            'InvalidArgumentException'
         );
+        $this->expectExceptionMessage('type of arg1 must be string or DateTime');
 
         $obj = new Statement();
         $obj->setStored(1);
@@ -601,52 +601,38 @@ class StatementTest extends \PHPUnit_Framework_TestCase {
     public function testSignNoArgs() {
         $obj = new Statement();
 
-        if (PHP_MAJOR_VERSION >= 7 && PHP_MINOR_VERSION >= 1) {
-            $this->setExpectedException(
-                'ArgumentCountError'
-            );
-        }
-        else {
-            $this->setExpectedException(
-                'PHPUnit_Framework_Error_Warning',
-                (getenv('TRAVIS_PHP_VERSION') == "hhvm" ? 'sign() expects at least 2 parameters, 0 given' : 'Missing argument 1')
-            );
-        }
+        $this->expectException(
+            'ArgumentCountError'
+        );
+
         $obj->sign();
     }
 
     public function testSignOneArg() {
         $obj = new Statement();
 
-        if (PHP_MAJOR_VERSION >= 7 && PHP_MINOR_VERSION >= 1) {
-            $this->setExpectedException(
-                'ArgumentCountError'
-            );
-        }
-        else {
-            $this->setExpectedException(
-                'PHPUnit_Framework_Error_Warning',
-                (getenv('TRAVIS_PHP_VERSION') == "hhvm" ? 'sign() expects at least 2 parameters, 1 given' : 'Missing argument 2')
-            );
-        }
+        $this->expectException(
+            'ArgumentCountError'
+        );
+
         $obj->sign('test');
     }
 
     public function testSignNoActor() {
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'actor must be present in signed statement'
+        $this->expectException(
+            'InvalidArgumentException'
         );
+        $this->expectExceptionMessage('actor must be present in signed statement');
 
         $obj = new Statement();
         $obj->sign('test', 'test');
     }
 
     public function testSignNoVerb() {
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'verb must be present in signed statement'
+        $this->expectException(
+            'InvalidArgumentException'
         );
+        $this->expectExceptionMessage('verb must be present in signed statement');
 
         $obj = new Statement(
             [
@@ -657,10 +643,10 @@ class StatementTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testSignNoObject() {
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'object must be present in signed statement'
+        $this->expectException(
+            'InvalidArgumentException'
         );
+        $this->expectExceptionMessage('object must be present in signed statement');
 
         $obj = new Statement(
             [
@@ -672,10 +658,10 @@ class StatementTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testSignInvalidAlgorithm() {
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            "Invalid signing algorithm: 'not right'"
+        $this->expectException(
+            'InvalidArgumentException'
         );
+        $this->expectExceptionMessage("Invalid signing algorithm: 'not right'");
 
         $obj = new Statement(
             [
@@ -690,10 +676,10 @@ class StatementTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testSignEmptyPassword() {
-        $this->setExpectedException(
-            'Exception',
-            'Unable to get private key: error:0906A068:PEM routines:PEM_do_header:bad password read'
+        $this->expectException(
+            'Exception'
         );
+        $this->expectExceptionMessage('Unable to get private key: error:0906A068:PEM routines:PEM_do_header:bad password read');
 
         $obj = new Statement(
             [
@@ -708,10 +694,10 @@ class StatementTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testSignInvalidPassword() {
-        $this->setExpectedExceptionRegExp(
-            'Exception',
-            '/Unable to get private key: error:.*:bad decrypt/'
+        $this->expectException(
+            'Exception'
         );
+        $this->expectExceptionMessageMatches('/Unable to get private key: error:.*:bad decrypt/');
 
         $obj = new Statement(
             [
@@ -726,10 +712,10 @@ class StatementTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testSignInvalidX5cErrorToException() {
-        $this->setExpectedExceptionRegExp(
-            'PHPUnit_Framework_Error',
-            '/supplied parameter cannot be coerced into an X509 certificate!/'
+        $this->expectException(
+            'PHPUnit\Framework\Error\Error'
         );
+        $this->expectExceptionMessageMatches('/supplied parameter cannot be coerced into an X509 certificate!/');
 
         $obj = new Statement(
             [
@@ -744,10 +730,10 @@ class StatementTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testSignInvalidX5cNoError() {
-        $this->setExpectedExceptionRegExp(
-            'Exception',
-            '/Unable to read certificate for x5c inclusion: .*/'
+        $this->expectException(
+            'Exception'
         );
+        $this->expectExceptionMessageMatches('/Unable to read certificate for x5c inclusion: .*/');
 
         $obj = new Statement(
             [
@@ -806,10 +792,10 @@ class StatementTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testVerifyInvalidX5cErrorToException() {
-        $this->setExpectedExceptionRegExp(
-            'PHPUnit_Framework_Error',
-            '/supplied parameter cannot be coerced into an X509 certificate!/'
+        $this->expectException(
+            'PHPUnit\Framework\Error\Error'
         );
+        $this->expectExceptionMessageMatches('/supplied parameter cannot be coerced into an X509 certificate!/');
 
         $content = new JWS(
             [

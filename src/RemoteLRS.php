@@ -162,7 +162,13 @@ class RemoteLRS implements LRSInterface
             $fp = fopen($url, 'rb', false, $context);
 
             if (! $fp) {
-                $content = "Request failed: $php_errormsg";
+                $content = "Request failed";
+
+                $last_error = error_get_last();
+
+                if($last_error && $last_error['type'] === E_ERROR) {
+                    $content .= ": " . $last_error['message'];
+                }
             }
         }
         catch (\ErrorException $ex) {

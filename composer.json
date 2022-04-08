@@ -1,5 +1,5 @@
 {
-    "name": "elentrapackages/tincan",
+    "name": "rusticisoftware/tincan",
     "type": "library",
     "description": "Experience API (Tin Can API) Library Fork with PHP 8 support",
     "homepage": "http://rusticisoftware.github.io/TinCanPHP/",

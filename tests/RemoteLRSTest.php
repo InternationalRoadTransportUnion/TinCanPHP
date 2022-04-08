@@ -28,13 +28,13 @@ use TinCan\Util;
 use TinCan\Verb;
 use TinCan\Version;
 
-class RemoteLRSTest extends \PHPUnit_Framework_TestCase {
+class RemoteLRSTest extends \PHPUnit\Framework\TestCase {
     static private $endpoint;
     static private $version;
     static private $username;
     static private $password;
 
-    public static function setUpBeforeClass() {
+    public static function setUpBeforeClass(): void {
         self::$endpoint = $GLOBALS['LRSs'][0]['endpoint'];
         self::$version = $GLOBALS['LRSs'][0]['version'];
         self::$username = $GLOBALS['LRSs'][0]['username'];

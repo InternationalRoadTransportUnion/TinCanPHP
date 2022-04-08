@@ -1,7 +1,7 @@
 {
-    "name": "rusticisoftware/tincan",
+    "name": "elentrapackages/tincan",
     "type": "library",
-    "description": "Experience API (Tin Can API) Library",
+    "description": "Experience API (Tin Can API) Library Fork with PHP 8 support",
     "homepage": "http://rusticisoftware.github.io/TinCanPHP/",
     "keywords": [
         "tin can",
@@ -20,18 +20,17 @@
         }
     ],
     "support": {
-        "email": "support@tincanapi.com",
-        "issues": "https://github.com/RusticiSoftware/TinCanPHP/issues"
+        "issues": "https://github.com/EntradaPackages/TinCanPHP/issues",
+        "source": "https://github.com/EntradaPackages/TinCanPHP"
     },
     "require": {
-        "php": "~5.5 || ^7.0.3",
+        "php": "^7.3 || ~8.0.0",
         "ext-openssl": "*",
         "namshi/jose": "^7.2.1",
-        "willdurand/negotiation": "^2.0"
+        "willdurand/negotiation": "^3.0"
     },
     "require-dev": {
-        "phpdocumentor/phpdocumentor": "2.*",
-        "phpunit/phpunit": "^4"
+        "phpunit/phpunit": "^8.0"
     },
     "autoload": {
         "psr-4": {

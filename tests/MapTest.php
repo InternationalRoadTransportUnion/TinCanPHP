@@ -21,7 +21,10 @@ use TinCan\Map;
 
 class StubMap extends Map {}
 
-class MapTest extends \PHPUnit_Framework_TestCase {
+class MapTest extends \PHPUnit\Framework\TestCase {
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testInstantiation() {
         $obj = new StubMap();
     }
@@ -49,10 +52,10 @@ class MapTest extends \PHPUnit_Framework_TestCase {
     public function testExceptionOnBadMethodCall() {
         $badName ="dsadasdasdasdasdasdas";
 
-        $this->setExpectedException(
-            '\BadMethodCallException',
-            get_class(new StubMap) . "::$badName() does not exist"
+        $this->expectException(
+            '\BadMethodCallException'
         );
+        $this->expectExceptionMessage(get_class(new StubMap) . "::$badName() does not exist");
 
         $obj = new StubMap();
         $obj->$badName();

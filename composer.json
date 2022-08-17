@@ -24,7 +24,7 @@
         "source": "https://github.com/TheGarious/TinCanPHP"
     },
     "require": {
-        "php": "^7.3 || ^8.0 || ^8.1",
+        "php": "^8.1",
         "ext-openssl": "*",
         "namshi/jose": "^7.2.1",
         "willdurand/negotiation": "^3.0"

@@ -16,3 +16,6 @@ doc/coverage
 
 # wild
 todo.md
+
+# JetBrains IDE
+.idea
